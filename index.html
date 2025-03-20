@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Celebración de Matias</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-image: url('back.png');
+            overflow-x: hidden;
+        }
+        
+        /* Entrance Container */
+        .entrance-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #f1f1f1;
+            z-index: 10;
+            transition: opacity 1s ease-in-out;
+        }
+        
+        .entrance-truck {
+            max-width: 200px;
+            height: auto;
+            margin-bottom: 30px;
+        }
+        
+        .enter-button {
+            padding: 15px 40px;
+            font-size: 1.5rem;
+            background-color: #3697d9;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: transform 0.3s, background-color 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .enter-button:hover {
+            transform: scale(1.05);
+            background-color: #fcb83f;
+        }
+        
+        /* Invitation Container */
+        .invitation-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            padding: 20px;
+        }
+        
+        /* Section Styles */
+        .section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 40px;
+            padding: 20px;
+            /* border-radius: 10px;
+            background-color: #f9f9f9;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); */
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            color: #5e4b2e;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .image-container {
+            margin: 20px 0;
+            max-width: 100%;
+            text-align: center;
+        }
+        
+        .image-container img {
+            max-width: 400px;
+            height: auto;
+            border-radius: 10px;
+        }
+        
+        
+        /* Countdown Styles */
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+        }
+        
+        .countdown-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .countdown-circle {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid #fcb83f;
+            margin-bottom: 10px;
+            background-color: transparent;
+        }
+        
+        .countdown-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #fee903;
+        }
+        
+        .countdown-label {
+            text-transform: uppercase;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #fee903;
+        }
+        
+        /* Event Details */
+        .event-details {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            margin: 20px 0;
+        }
+        
+        .detail-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            color: #5e4b2e;
+        }
+        
+        .detail-item svg {
+            margin-right: 10px;
+            fill: #fcb83f;
+        }
+        
+        .map-button {
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            background-color: #3697d9;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: transform 0.3s, background-color 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+        }
+        
+        .map-button:hover {
+            transform: scale(1.05);
+            background-color: #fcb83f;
+        }
+        
+        /* Music Toggle Button */
+        .music-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #fcb83f;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 5;
+        }
+        
+        .music-toggle svg {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+        
+        /* Utility Classes */
+        .hidden {
+            display: none;
+        }
+        
+        .fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 600px) {
+            .countdown-circle {
+                width: 90px;
+                height: 90px;
+            }
+            
+            .countdown-value {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .section {
+                padding: 10px 0;
+            }
+            
+            .image-container {
+                width: 100% !important;
+                margin: 10px 0;
+            }
+            
+            .image-container img {
+                max-width: 100% !important;
+                width: 100%;
+                border-radius: 8px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .countdown-container {
+                gap: 10px;
+            }
+            
+            .countdown-circle {
+                width: 70px;
+                height: 70px;
+                border-width: 3px;
+            }
+            
+            .countdown-value {
+                font-size: 1.5rem;
+            }
+            
+            .countdown-label {
+                font-size: 0.8rem;
+            }
+            
+            .invitation-container {
+                padding: 10px 0;
+            }
+            
+            .section {
+                padding: 10px 0;
+                margin-bottom: 20px;
+            }
+            
+            .section-title {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Entrance Container -->
+    <div class="entrance-container" id="entranceContainer">
+        <h1 style="margin-bottom: 30px; color: #5e4b2e; font-size: 2.5rem; text-align: center;">Matias</h1>
+        <img src="truck.gif" alt="Truck" class="entrance-truck">
+        <button class="enter-button" id="enterButton">Entrar</button>
+    </div>
+    
+    <!-- Invitation Container -->
+    <div class="invitation-container" id="invitationContainer">
+        <!-- Section 1: Achievement Celebration and Countdown -->
+        <div class="section">
+            <div class="image-container" style="width: 400px !important;">
+                <img src="foto.gif" alt="Matias Achievement Image" id="achievementImage">
+            </div>
+            <!-- Countdown Container -->
+            <div class="countdown-container">
+                <div class="countdown-item">
+                    <div class="countdown-circle">
+                        <span id="days" class="countdown-value">0</span>
+                    </div>
+                    <span class="countdown-label">Días</span>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-circle">
+                        <span id="hours" class="countdown-value">0</span>
+                    </div>
+                    <span class="countdown-label">Horas</span>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-circle">
+                        <span id="minutes" class="countdown-value">0</span>
+                    </div>
+                    <span class="countdown-label">Mins</span>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-circle">
+                        <span id="seconds" class="countdown-value">0</span>
+                    </div>
+                    <span class="countdown-label">Segs</span>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="image-container">
+                <img src="R.png" alt="Matias Achievement Image" id="achievementImage">
+            </div>
+        </div>
+        <!-- Section 2: Event Details -->
+        <div class="section">
+            <div class="image-container">
+                <img src="/api/placeholder/400/320" alt="Event Image">
+            </div>
+            
+            <h2 class="section-title">Detalles del Evento</h2>
+            
+            <div class="event-details">
+                <div class="detail-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+                    </svg>
+                    <span>Domingo, 15 de Junio de 2025</span>
+                </div>
+                <div class="detail-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                    </svg>
+                    <span>5:00 PM</span>
+                </div>
+                <div class="detail-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    </svg>
+                    <span>Av. Example #123, Colonia Centro</span>
+                </div>
+                
+                <button class="map-button" id="mapButton">Abrir Mapa</button>
+            </div>
+        </div>
+        
+        <!-- Section 3: Additional Information -->
+        <div class="section">
+            <div class="image-container">
+                <img src="/api/placeholder/400/320" alt="Additional Image">
+            </div>
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <p style="font-size: 1.2rem; color: #5e4b2e; margin-bottom: 10px;">
+                    ¡Acompáñanos en este día tan especial!
+                </p>
+                <p style="font-size: 1rem; color: #5e4b2e;">
+                    Por favor confirma tu asistencia antes del 1 de Junio.
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Music Toggle Button -->
+    <div class="music-toggle" id="musicToggle">
+        <svg id="playIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M8 5v14l11-7z"/>
+        </svg>
+        <svg id="pauseIcon" class="hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+        </svg>
+    </div>
+    
+    <!-- Audio Element (hidden) -->
+    <audio id="backgroundMusic" loop>
+        <source src="song.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+    
+    <script>
+        // DOM Elements
+        const entranceContainer = document.getElementById('entranceContainer');
+        const invitationContainer = document.getElementById('invitationContainer');
+        const enterButton = document.getElementById('enterButton');
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        const musicToggle = document.getElementById('musicToggle');
+        const playIcon = document.getElementById('playIcon');
+        const pauseIcon = document.getElementById('pauseIcon');
+        const mapButton = document.getElementById('mapButton');
+        
+        // Initially hide the invitation container
+        invitationContainer.classList.add('hidden');
+        
+        // Enter button click handler
+        enterButton.addEventListener('click', () => {
+            entranceContainer.classList.add('fade-out');
+            // Play music when entering
+            playMusic();
+            
+            // Show invitation container
+            invitationContainer.classList.remove('hidden');
+            
+            // Remove entrance container from DOM after transition
+            setTimeout(() => {
+                entranceContainer.classList.add('hidden');
+            }, 1000);
+        });
+        
+        // Map button click handler
+        mapButton.addEventListener('click', () => {
+            // Replace with actual Google Maps URL to the location
+            window.open('https://maps.google.com/?q=Av.+Example+123+Colonia+Centro', '_blank');
+        });
+        
+        // Music toggle click handler
+        musicToggle.addEventListener('click', () => {
+            if (backgroundMusic.paused) {
+                playMusic();
+            } else {
+                pauseMusic();
+            }
+        });
+        
+        // Play music function
+        function playMusic() {
+            backgroundMusic.play().catch(error => {
+                console.log("Audio play failed:", error);
+                // Modern browsers require user interaction before audio can play
+                // The enter button click should satisfy this requirement
+            });
+            playIcon.classList.add('hidden');
+            pauseIcon.classList.remove('hidden');
+        }
+        
+        // Pause music function
+        function pauseMusic() {
+            backgroundMusic.pause();
+            pauseIcon.classList.add('hidden');
+            playIcon.classList.remove('hidden');
+        }
+        
+        // Set the event date: June 15, 2025 at 17:00
+        const eventDate = new Date('June 15, 2025 17:00:00');
+        
+        // Update the countdown every second
+        function updateCountdown() {
+            // Get current date and time in Mexico City (Central Time)
+            const now = new Date();
+            
+            // Convert to Mexico Central Time (UTC-6)
+            const mexicoCentralTime = new Date(now.toLocaleString('en-US', {
+                timeZone: 'America/Mexico_City'
+            }));
+            
+            // Calculate the time difference
+            const diff = eventDate - mexicoCentralTime;
+            
+            // Check if the event date has passed
+            if (diff <= 0) {
+                document.getElementById('days').textContent = '0';
+                document.getElementById('hours').textContent = '0';
+                document.getElementById('minutes').textContent = '0';
+                document.getElementById('seconds').textContent = '0';
+                return;
+            }
+            
+            // Calculate days, hours, minutes and seconds
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            // Display the result
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+            document.getElementById('seconds').textContent = seconds;
+        }
+        
+        // Call updateCountdown() once to set initial values
+        updateCountdown();
+        
+        // Update every second
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>
