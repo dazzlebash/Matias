@@ -28,24 +28,28 @@
             position: fixed;
             top: 0;
             left: 0;
-            background-color: #f1f1f1;
+            background-image: url('back.png'); /* Same background as body */
             z-index: 10;
             transition: opacity 1s ease-in-out;
         }
         
         .entrance-truck {
-            max-width: 200px;
+            max-width: 380px;
             height: auto;
-            margin-bottom: 30px;
+        }
+        
+        .entrance-image {
+            max-width: 380px;
+            height: auto;
         }
         
         .enter-button {
             padding: 15px 40px;
-            font-size: 1.5rem;
+            font-size: 2.5rem;
             background-color: #3697d9;
             color: white;
             border: none;
-            border-radius: 30px;
+            border-radius: 0px;
             cursor: pointer;
             transition: transform 0.3s, background-color 0.3s;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -107,6 +111,7 @@
             width: 100%;
             max-width: 600px;
             padding: 20px;
+            margin-bottom: 30px;
         }
         
         .countdown-item {
@@ -281,52 +286,57 @@
 <body>
     <!-- Entrance Container -->
     <div class="entrance-container" id="entranceContainer">
-        <h1 style="margin-bottom: 30px; color: #5e4b2e; font-size: 2.5rem; text-align: center;">Matias</h1>
         <img src="truck.gif" alt="Truck" class="entrance-truck">
-        <button class="enter-button" id="enterButton">Entrar</button>
+        <img src="matias.png" alt="Matias" class="entrance-image">
+
+        
+        <!-- Moved Countdown Container to entrance -->
+        <div class="countdown-container">
+            <div class="countdown-item">
+                <div class="countdown-circle">
+                    <span id="days" class="countdown-value">0</span>
+                </div>
+                <span class="countdown-label">Días</span>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-circle">
+                    <span id="hours" class="countdown-value">0</span>
+                </div>
+                <span class="countdown-label">Horas</span>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-circle">
+                    <span id="minutes" class="countdown-value">0</span>
+                </div>
+                <span class="countdown-label">Mins</span>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-circle">
+                    <span id="seconds" class="countdown-value">0</span>
+                </div>
+                <span class="countdown-label">Segs</span>
+            </div>
+        </div>
+        
+        <button class="enter-button" id="enterButton">ENTRAR</button>
     </div>
     
     <!-- Invitation Container -->
     <div class="invitation-container" id="invitationContainer">
-        <!-- Section 1: Achievement Celebration and Countdown -->
+
         <div class="section">
             <div class="image-container" style="width: 400px !important;">
                 <img src="foto.gif" alt="Matias Achievement Image" id="achievementImage">
             </div>
-            <!-- Countdown Container -->
-            <div class="countdown-container">
-                <div class="countdown-item">
-                    <div class="countdown-circle">
-                        <span id="days" class="countdown-value">0</span>
-                    </div>
-                    <span class="countdown-label">Días</span>
-                </div>
-                <div class="countdown-item">
-                    <div class="countdown-circle">
-                        <span id="hours" class="countdown-value">0</span>
-                    </div>
-                    <span class="countdown-label">Horas</span>
-                </div>
-                <div class="countdown-item">
-                    <div class="countdown-circle">
-                        <span id="minutes" class="countdown-value">0</span>
-                    </div>
-                    <span class="countdown-label">Mins</span>
-                </div>
-                <div class="countdown-item">
-                    <div class="countdown-circle">
-                        <span id="seconds" class="countdown-value">0</span>
-                    </div>
-                    <span class="countdown-label">Segs</span>
-                </div>
-            </div>
         </div>
-        <div class="section">
+        <div class="section" style="background-color: #fcb83f; width: 100%; max-width: 100%; padding: 30px 20px; border-radius: 0;">
+            
             <div class="image-container">
+                <span style="display: block; font-size: 1.4rem; font-weight: bold; color: white; margin-bottom: 20px; text-align: center; text-shadow: 1px 1px 2px rgba(0,0,0,0.2);">¡Acompáñanos a celebrar con una carrera llena de diversión, velocidad y muchas sorpresas!</span>
                 <img src="R.png" alt="Matias Achievement Image" id="achievementImage">
             </div>
         </div>
-        <!-- Section 2: Event Details -->
+
         <div class="section">
             <div class="image-container">
                 <img src="/api/placeholder/400/320" alt="Event Image">
@@ -358,7 +368,7 @@
             </div>
         </div>
         
-        <!-- Section 3: Additional Information -->
+
         <div class="section">
             <div class="image-container">
                 <img src="/api/placeholder/400/320" alt="Additional Image">
@@ -480,7 +490,7 @@
             
             // Calculate days, hours, minutes and seconds
             const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));    
             const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((diff % (1000 * 60)) / 1000);
             
